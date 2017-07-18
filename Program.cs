@@ -10,14 +10,12 @@ namespace Midterm
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Salve Bibliotheca Alexdriae");
-            bool keepGoing = true;
+            Console.WriteLine("Salve Bibliotheca Alexdriae"); //yay Latin!
+            bool keepGoing = true; 
 
-            while (keepGoing)
+            while (keepGoing) //this assures that all actions return back to the main menu
             {
-                //List<Scroll> scrolls = new List<Scroll>();
-
-                keepGoing = Library.FirstMenu();
+                keepGoing = Library.FirstMenu(); //menu item 4 = false
             }
         }
     }

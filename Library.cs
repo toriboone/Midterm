@@ -8,12 +8,11 @@ namespace Midterm
 {
     static class Library
     {
-        //static public Status s = new Status();
-        static public List<Scroll> scrolls = CreateLibraryList();
+        static public List<Scroll> scrolls = CreateLibraryList(); //declares the object for the class
 
-        static public List<Scroll> CreateLibraryList()
+        static public List<Scroll> CreateLibraryList() //builds the object
         {
-            scrolls = new List<Scroll>();
+            scrolls = new List<Scroll>(); //only makes one cookie
 
             scrolls.Add(new Scroll("The Odyssey", "Homer", "poetry", true));
             scrolls.Add(new Scroll("Ode to Aphrodite", "Sappho", "poetry", true));
@@ -43,11 +42,10 @@ namespace Midterm
             return scrolls;
         }
 
-        //static public List<Status> checkedOutItems = new List<Status>();
-        static public bool Check(string userInput, int which)
+        static public bool Check(string userInput, int which) //used on both menus to check for valid input per menu
         {
             bool trueCheck = false;
-            if (userInput == "1" || userInput == "2" || userInput == "3" && which == 1)
+            if (userInput == "1" || userInput == "2" || userInput == "3" || userInput == "4" && which == 1 )
             {
                 trueCheck = true;
             }
@@ -65,19 +63,19 @@ namespace Midterm
         static public bool FirstMenu()
         {
             Console.WriteLine();
-            Console.WriteLine("Would you like to (1)Search for a scroll or (2)View entire inventory or (3)Burn the library down?");
-            string tat = " ";
+            Console.WriteLine("Would you like to: \n(1)Check out a scroll \n(2)Return a scroll \n(3)Browse the collection \n(4)Burn the library down?");
+            string tat;
             bool valid = false;
             bool continuing = false;
 
             tat = Console.ReadLine();
 
-            valid = Check(tat, 1);
+            valid = Check(tat, 1); //runs back to validation method 
             while (!valid)
             {
-                Console.WriteLine("Try a 1 for searching for a scroll, 2 for viewing the entire library, or 3 to quit.");
+                Console.WriteLine("Try: \n(1)For checking out a scroll \n(2)For returning a scroll \n(3)For viewing the entire library \n(4)To quit");
                 tat = Console.ReadLine();
-                valid = Check(tat, 1);
+                valid = Check(tat, 1); //keeps going back to the validation method 
             }
 
             if (tat == "1")
@@ -95,7 +93,7 @@ namespace Midterm
                 Console.WriteLine("Please search by title, author, or topic.");
                 string search = Console.ReadLine();
                 bool cont = false;
-                string dayDate = DueDate();
+                //string dayDate = DueDate();
                 string yn = "n";
 
                 foreach (Scroll b in scrolls)
@@ -108,11 +106,11 @@ namespace Midterm
                         if (b.checkedin == true) //Couldn't this whole statement be put into a method and ran for each type of search?
                         {
                             Console.WriteLine(b.title + " by " + b.author + " is currently available.");
-                            Console.WriteLine("Would you like to check this scroll out? Y/N");
+                            Console.WriteLine("Would you like to check this scroll out? y/n");
                             yn = Console.ReadLine();
 
                             cont = Check(yn, 2);
-                            if (cont == false)
+                            if (cont == false) //keeps user stuck here until valid input
                             {
                                 Console.WriteLine("Please try again.");
                                 yn = Console.ReadLine();
@@ -128,6 +126,7 @@ namespace Midterm
                         else if (b.checkedin == false)
                         {
                             Console.WriteLine("Sorry, " + b.title + " by " + b.author + " is currently unavailable.");
+                            Console.WriteLine("It is estimated to be available by " + DueDate() + ".");
                         }
                     }
                     //else if (input == "2" && b.author == search)
@@ -141,8 +140,29 @@ namespace Midterm
                     continuing = true;
                 }
             }
-
             if (tat == "2")
+            {
+                Console.WriteLine("Please enter the title or author of the scroll you wish to return:");
+                string search = Console.ReadLine();
+                foreach (Scroll c in scrolls)
+                {
+                    if (c.title == search || c.author == search)
+                    {
+                        if (c.checkedin == false)
+                        {
+                            Console.WriteLine("Thank you for returning " + c.title + " by " + c.author + ".");
+                            c.checkedin = true; //true = checked in, false = checked out
+                        }
+                        else if (c.checkedin == true)
+                        {
+                            Console.WriteLine("This scroll is available.");
+                        }
+                    }
+                    continuing = true; //brings user back to main menu
+                }
+            }
+
+            if (tat == "3") //browseable list
             {
                 foreach (Scroll a in scrolls)
                 {
@@ -151,11 +171,11 @@ namespace Midterm
                 continuing = true;
                 return continuing;
             }
-            if (tat == "3")
+            if (tat == "4")
             {
                 Console.WriteLine("You burned down the library. You monster!");
                 continuing = false;
-                return continuing;
+                return continuing; //does NOT take user back to menu
             }
             return continuing;
         }
@@ -164,7 +184,7 @@ namespace Midterm
         {
             DateTime thisday = DateTime.Now;
             DateTime duedate = DateTime.Now.Date.AddDays(14);
-            return duedate.ToString();
+            return duedate.ToString("D");
         }
     }
 

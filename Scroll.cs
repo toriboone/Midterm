@@ -8,7 +8,7 @@ namespace Midterm
 {
     class Scroll
     {
-        public string duedate = "0";
+        //public string duedate = "0";
         public bool checkedin;
         public string author;
         public string topic;
