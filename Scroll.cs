@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Midterm2
+namespace Midterm
 {
     class Scroll
     {
@@ -16,7 +16,7 @@ namespace Midterm2
 
         public Scroll(string title, string author, string topic, bool checkedin)
         {
-        
+
             this.checkedin = checkedin;
             this.title = title;
             this.author = author;
